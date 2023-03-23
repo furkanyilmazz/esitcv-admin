@@ -1,13 +1,40 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import Router from "./Router";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import { MetronicI18nProvider } from "./i18n";
+import Error from "./Screens/Error";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const isMobilePhone = () => {
+  if (typeof window.orientation !== "undefined") {
+    return true;
+  }
+  return (
+    navigator.userAgent.indexOf("IEMobile") !== -1 ||
+    !!navigator.userAgent.match(/Windows Phone/i) ||
+    !!navigator.userAgent.match(/WPDesktop/i) ||
+    !!navigator.userAgent.match(/IEMobile/i) ||
+    !!navigator.userAgent.match(/Windows Phone/i) ||
+    !!navigator.userAgent.match(/WindowsMobile/i)
+  );
+};
+
+console.log(isMobilePhone());
+
 root.render(
   <React.StrictMode>
-    <App />
+    {isMobilePhone() ? (
+      <Error />
+    ) : (
+      <MetronicI18nProvider>
+        <Router />
+      </MetronicI18nProvider>
+    )}
   </React.StrictMode>
 );
 
